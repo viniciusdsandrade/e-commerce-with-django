@@ -10,6 +10,7 @@ class ProdutoCategoriaInline(admin.TabularInline):
 
 
 # Configuração do admin para Produto
+@admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('nome', 'preco', 'is_ativo')  # Campos exibidos na lista de produtos
     search_fields = ('nome', 'descricao')  # Campos para pesquisa
@@ -19,12 +20,13 @@ class ProdutoAdmin(admin.ModelAdmin):
 
 
 # Configuração do admin para Categoria
+@admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nome',)  # Campos exibidos na lista de categorias
     search_fields = ('nome',)  # Campos para pesquisa
 
 
-# Registrar os modelos com suas respectivas configurações personalizadas
-admin.site.register(Produto, ProdutoAdmin)
-admin.site.register(Categoria, CategoriaAdmin)
-admin.site.register(ProdutoCategoria)
+@admin.register(ProdutoCategoria)
+class ProdutoCategoriaAdmin(admin.ModelAdmin):
+    list_display = ('produto', 'categoria')
+    autocomplete_fields = ['produto', 'categoria']
