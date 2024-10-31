@@ -178,16 +178,10 @@ class Produto(models.Model):
     descricao = models.TextField(null=True, blank=True)
     is_ativo = models.BooleanField(default=True)
     categorias = models.ManyToManyField('Categoria', through='ProdutoCategoria')
+    imagem = models.ImageField(upload_to='images/', null=True, blank=True)
 
     def __str__(self):
         return self.nome
-
-
-# Tabela para armazenar o Estoque dos Produtos
-class Estoque(models.Model):
-    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    quantidade = models.PositiveIntegerField()
-    localizacao = models.CharField(max_length=70, null=True, blank=True)
 
 
 # Tabela para armazenar as Categorias
@@ -202,6 +196,13 @@ class Categoria(models.Model):
 class ProdutoCategoria(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+
+
+# Tabela para armazenar o Estoque dos Produtos
+class Estoque(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    quantidade = models.PositiveIntegerField()
+    localizacao = models.CharField(max_length=70, null=True, blank=True)
 
 
 # Tabela para armazenar as Listas de Desejos
